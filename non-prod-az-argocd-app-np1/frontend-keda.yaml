@@ -1,0 +1,28 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: frontend-keda
+spec:
+  scaleTargetRef:
+    name: frontend-deployment
+  pollingInterval: 30
+  cooldownPeriod: 300
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+    - type: cron
+      metadata:
+        timezone: "UTC"
+        start: "0 0 * * 0" # every Sunday at midnight
+        end: "0 12 * * 0" # every Sunday at noon
+        desiredReplicas: "5"
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 300
+          # policies:
+          #   - type: Percent
+          #     value: 100
+          #     periodSeconds: 300
+    
