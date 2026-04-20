@@ -4,7 +4,7 @@ metadata:
   name: frontend-keda
 spec:
   scaleTargetRef:
-    name: frontend-deployment
+    name: frontend
   pollingInterval: 30
   cooldownPeriod: 300
   minReplicaCount: 1
